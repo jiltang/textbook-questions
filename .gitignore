@@ -1,2 +1,4 @@
 tqa_train_val_test
 .DS_Store
+__pycache__
+.vector_cache
