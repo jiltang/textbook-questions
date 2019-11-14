@@ -409,7 +409,7 @@ def print_examples(dataLoader, model, vocab, n=2, max_len=100):
 
 
 criterion = nn.NLLLoss(reduction="sum", ignore_index=0)
-trainLoader, valLoader, testLoader, vocab = data.loadData('fake_data')
+trainLoader, valLoader, testLoader, vocab = data.loadData('short_data')
 
 model = make_model(vocab, emb_size=50, hidden_size=64)
 optim = torch.optim.Adam(model.parameters(), lr=0.0003)
