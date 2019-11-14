@@ -280,21 +280,21 @@ def run_epoch(trainLoader, model, loss_compute, print_every=50):
     print_tokens = 0
 
     for i, data in tqdm(enumerate(trainLoader, 1), desc='[epoch]'):
-        print("Started", i)
+        #print("Started", i)
         x, x_lengths = data.Text
         y, y_lengths = data.Question
         batch = Batch((x, x_lengths), (y, y_lengths), pad_index=0)
 
-        print("Batched")
+        #print("Batched")
         out, _, pre_output = model.forward(batch.src, batch.trg,
                                            batch.src_mask, batch.trg_mask,
                                            batch.src_lengths, batch.trg_lengths)
-        print("Forward step occurred")
+        #print("Forward step occurred")
         loss = loss_compute(pre_output, batch.trg_y, batch.nseqs)
         total_loss += loss
         total_tokens += batch.ntokens
         print_tokens += batch.ntokens
-        print("Ended loop")
+        #print("Ended loop")
 
         if model.training and i % print_every == 0:
             elapsed = time.time() - start
@@ -382,8 +382,7 @@ def print_examples(dataLoader, model, vocab, n=2, max_len=100):
     sos_index = vocab.stoi['[SOS]']
     eos_index = vocab.stoi['[EOS]']
 
-
-    for i, data in tqdm(enumerate(trainLoader, 1), desc=['printing examples']):
+    for i, data in tqdm(enumerate(dataLoader, 1), desc='[printing examples]'):
         x, x_lengths = data.Text
         y, y_lengths = data.Question
         batch = Batch((x, x_lengths), (y, y_lengths), pad_index=0)
@@ -391,16 +390,16 @@ def print_examples(dataLoader, model, vocab, n=2, max_len=100):
         trg = batch.trg_y.cpu().numpy()[0, :]
 
         # remove </s> (if it is there)
-        src = src[:-1] if src[-1] == src_eos_index else src
-        trg = trg[:-1] if trg[-1] == trg_eos_index else trg
+        src = src[:-1] if src[-1] == eos_index else src
+        trg = trg[:-1] if trg[-1] == eos_index else trg
 
         result, _ = greedy_decode(
           model, batch.src, batch.src_mask, batch.src_lengths,
           max_len=max_len, sos_index=sos_index, eos_index=eos_index)
         print(f"Example {i}")
-        print("Src : ", " ".join(lookup_words(src, vocab=src_vocab)))
-        print("Trg : ", " ".join(lookup_words(trg, vocab=trg_vocab)))
-        print("Pred: ", " ".join(lookup_words(result, vocab=trg_vocab)))
+        print("Src : ", " ".join(lookup_words(src)))
+        print("Trg : ", " ".join(lookup_words(trg)))
+        print("Pred: ", " ".join(lookup_words(result)))
         print()
 
         count += 1
@@ -410,7 +409,7 @@ def print_examples(dataLoader, model, vocab, n=2, max_len=100):
 
 
 criterion = nn.NLLLoss(reduction="sum", ignore_index=0)
-trainLoader, valLoader, testLoader, vocab = data.loadData('data')
+trainLoader, valLoader, testLoader, vocab = data.loadData('fake_data')
 
 model = make_model(vocab, emb_size=50, hidden_size=64)
 optim = torch.optim.Adam(model.parameters(), lr=0.0003)
@@ -435,4 +434,4 @@ for epoch in range(10):
         perplexity = run_epoch(valLoader, model, SimpleLossCompute(model.generator, criterion, None))
         print("Evaluation perplexity: %f" % perplexity)
         dev_perplexities.append(perplexity)
-        print_examples(eval_data, model, n=2, max_len=9)
+        print_examples(valLoader, model, vocab, n=2, max_len=9)
