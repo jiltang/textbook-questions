@@ -15,8 +15,8 @@ def loadData(path, dim=50):
             validation='val_dat.txt', test='test_dat.txt', format='tsv',
             fields=[('Text', TEXT), ('Question', QUESTION)])
 
-    TEXT.build_vocab(train, vectors=f"glove.6B.{dim}d")
-    QUESTION.build_vocab(train, vectors=f"glove.6B.{dim}d")
+    TEXT.build_vocab(train, val, vectors=f"glove.6B.{dim}d")
+    QUESTION.build_vocab(train, val, vectors=f"glove.6B.{dim}d")
 
     trainLoader, valLoader, testLoader = torchtext.data.Iterator.splits(
             (train, val, test), sort_key=lambda x: len(x.Text),
