@@ -20,7 +20,6 @@ np.random.seed(seed)
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 
-USE_CUDA = False
 
 class EncoderDecoder(nn.Module):
     """
@@ -62,7 +61,7 @@ class Encoder(nn.Module):
         The input mini-batch x needs to be sorted by length.
         x should have dimensions [batch, time, dim].
         """
-        packed = pack_padded_sequence(x, lengths, batch_first=True, enforce_sorted=False)
+        packed = pack_padded_sequence(x, lengths, batch_first=True)
         output, final = self.rnn(packed)
         output, _ = pad_packed_sequence(output, batch_first=True)
 
@@ -379,9 +378,6 @@ def print_examples(dataLoader, model, vocab, n=2, max_len=100):
     count = 0
     print()
 
-    for fake, real in zip('stable areas up they years drink'.split(), 'gravity pulls soil and rocks downhill'.split()):
-        print(fake, vocab.stoi[fake], real, vocab.stoi[real])
-
     sos_index = vocab.stoi['[SOS]']
     eos_index = vocab.stoi['[EOS]']
 
@@ -413,9 +409,9 @@ def print_examples(dataLoader, model, vocab, n=2, max_len=100):
 
 
 criterion = nn.NLLLoss(reduction="sum", ignore_index=0)
-trainLoader, valLoader, testLoader, vocab = data.loadData('short_data')
+trainLoader, valLoader, testLoader, vocab = data.loadData('data')
 
-model = make_model(vocab, emb_size=50, hidden_size=64)
+model = make_model(vocab, emb_size=50, hidden_size=200)
 optim = torch.optim.Adam(model.parameters(), lr=0.0003)
 
 dev_perplexities = []
@@ -424,7 +420,7 @@ dev_perplexities = []
 if USE_CUDA:
     model.cuda()
 
-for epoch in range(10):
+for epoch in range(500):
 
     print("Epoch %d" % epoch)
         # train
@@ -432,10 +428,11 @@ for epoch in range(10):
 
     run_epoch(trainLoader, model, SimpleLossCompute(model.generator, criterion, optim))
 
+    if epoch % 10 == 0:
     # evaluate
-    model.eval()
-    with torch.no_grad():
-        perplexity = run_epoch(valLoader, model, SimpleLossCompute(model.generator, criterion, None))
-        print("Evaluation perplexity: %f" % perplexity)
-        dev_perplexities.append(perplexity)
-        print_examples(valLoader, model, vocab, n=2, max_len=9)
+        model.eval()
+        with torch.no_grad():
+            perplexity = run_epoch(valLoader, model, SimpleLossCompute(model.generator, criterion, None))
+            print("Evaluation perplexity: %f" % perplexity)
+            dev_perplexities.append(perplexity)
+            print_examples(valLoader, model, vocab, n=5, max_len=15)

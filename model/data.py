@@ -20,7 +20,8 @@ def loadData(path, dim=50):
 
 
     trainLoader, valLoader, testLoader = torchtext.data.Iterator.splits(
-            (train, val, test), sort_key=lambda x: len(x.Text),
+            (train, val, test), sort_key=lambda x: len(x.Text), sort=False,
+            sort_within_batch=True,
             batch_sizes=(32, 1, 32), device=-1)
 
     vocab = TEXT.vocab
