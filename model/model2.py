@@ -379,6 +379,9 @@ def print_examples(dataLoader, model, vocab, n=2, max_len=100):
     count = 0
     print()
 
+    for fake, real in zip('stable areas up they years drink'.split(), 'gravity pulls soil and rocks downhill'.split()):
+        print(fake, vocab.stoi[fake], real, vocab.stoi[real])
+
     sos_index = vocab.stoi['[SOS]']
     eos_index = vocab.stoi['[EOS]']
 
@@ -388,6 +391,7 @@ def print_examples(dataLoader, model, vocab, n=2, max_len=100):
         batch = Batch((x, x_lengths), (y, y_lengths), pad_index=0)
         src = batch.src.cpu().numpy()[0, :]
         trg = batch.trg_y.cpu().numpy()[0, :]
+        print(trg)
 
         # remove </s> (if it is there)
         src = src[:-1] if src[-1] == eos_index else src
