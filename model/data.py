@@ -15,7 +15,7 @@ def loadData(path, dim=50):
             validation='val_dat.txt', test='test_dat.txt', format='tsv',
             fields=[('Text', TEXT), ('Question', TEXT)])
 
-    TEXT.build_vocab(train, val, vectors=f"glove.6B.{dim}d")
+    TEXT.build_vocab(train, val, vectors=f"glove.6B.{dim}d", vectors_cache="/u/scr/ethanchi/.vector_cache")
     # QUESTION.build_vocab(train, val, vectors=f"glove.6B.{dim}d")
 
 

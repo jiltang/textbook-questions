@@ -2,10 +2,12 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import math, copy, time
+import math, copy, time, os
 # import matplotlib.pyplot as plt
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 from tqdm import tqdm
+import sys
+
 
 import data
 
@@ -295,12 +297,6 @@ def run_epoch(trainLoader, model, loss_compute, print_every=50):
         print_tokens += batch.ntokens
         #print("Ended loop")
 
-        if model.training and i % print_every == 0:
-            elapsed = time.time() - start
-            print("Epoch Step: %d Loss: %f Tokens per Sec: %f" %
-                    (i, loss / batch.nseqs, print_tokens / elapsed))
-            start = time.time()
-            print_tokens = 0
 
     return math.exp(total_loss / float(total_tokens))
 
@@ -367,11 +363,11 @@ def greedy_decode(model, src, src_mask, src_lengths, max_len=100, sos_index=1, e
     return output, np.concatenate(attention_scores, axis=1)
 
 
-def lookup_words(x):
+def lookup_words(x, vocab):
     x = [vocab.itos[i] for i in x]
     return [str(t) for t in x]
 
-def print_examples(dataLoader, model, vocab, n=2, max_len=100):
+def generate_examples(dataLoader, model, vocab, n=None, max_len=100):
     """Prints N examples. Assumes batch size of 1."""
 
     model.eval()
@@ -381,13 +377,14 @@ def print_examples(dataLoader, model, vocab, n=2, max_len=100):
     sos_index = vocab.stoi['[SOS]']
     eos_index = vocab.stoi['[EOS]']
 
+    out = []
+
     for i, data in tqdm(enumerate(dataLoader, 1), desc='[printing examples]'):
         x, x_lengths = data.Text
         y, y_lengths = data.Question
         batch = Batch((x, x_lengths), (y, y_lengths), pad_index=0)
         src = batch.src.cpu().numpy()[0, :]
         trg = batch.trg_y.cpu().numpy()[0, :]
-        print(trg)
 
         # remove </s> (if it is there)
         src = src[:-1] if src[-1] == eos_index else src
@@ -396,43 +393,53 @@ def print_examples(dataLoader, model, vocab, n=2, max_len=100):
         result, _ = greedy_decode(
           model, batch.src, batch.src_mask, batch.src_lengths,
           max_len=max_len, sos_index=sos_index, eos_index=eos_index)
-        print(f"Example {i}")
-        print("Src : ", " ".join(lookup_words(src)))
-        print("Trg : ", " ".join(lookup_words(trg)))
-        print("Pred: ", " ".join(lookup_words(result)))
-        print()
-
-        count += 1
-        if count == n:
-            break
+        
+        out.append([' '.join(lookup_words(x, vocab)) for x in (src, trg, result)])
 
 
+    return out
 
-criterion = nn.NLLLoss(reduction="sum", ignore_index=0)
-trainLoader, valLoader, testLoader, vocab = data.loadData('data')
+def train(dataFile):
+    criterion = nn.NLLLoss(reduction="sum", ignore_index=0)
+    trainLoader, valLoader, testLoader, vocab = data.loadData(dataFile)
 
-model = make_model(vocab, emb_size=50, hidden_size=200)
-optim = torch.optim.Adam(model.parameters(), lr=0.0003)
+    model = make_model(vocab, emb_size=50, hidden_size=600, num_layers=2)
+    optim = torch.optim.Adam(model.parameters(), lr=0.0003)
 
-dev_perplexities = []
+    dev_perplexities = []
 
 
-if USE_CUDA:
-    model.cuda()
+    if USE_CUDA:
+        model.cuda()
 
-for epoch in range(500):
+    output_path = os.path.join("../outputs", dataFile + '-' + str(time.time()))
+    os.mkdir(output_path)
+    print(f"Constructing new output directory at {output_path}")
 
-    print("Epoch %d" % epoch)
-        # train
-    model.train()
+    for epoch in range(40):
 
-    run_epoch(trainLoader, model, SimpleLossCompute(model.generator, criterion, optim))
+        print("Epoch %d" % epoch)
+            # train
+        model.train()
 
-    if epoch % 10 == 0:
-    # evaluate
-        model.eval()
-        with torch.no_grad():
-            perplexity = run_epoch(valLoader, model, SimpleLossCompute(model.generator, criterion, None))
-            print("Evaluation perplexity: %f" % perplexity)
-            dev_perplexities.append(perplexity)
-            print_examples(valLoader, model, vocab, n=5, max_len=15)
+        run_epoch(trainLoader, model, SimpleLossCompute(model.generator, criterion, optim))
+        torch.save(model.state_dict(), os.path.join(f"../params/seq2seq-{epoch}.params"))
+
+        if epoch % 10 == 0 and epoch != 0:
+        # evaluate
+            model.eval()
+            with torch.no_grad():
+                perplexity = run_epoch(valLoader, model, SimpleLossCompute(model.generator, criterion, None))
+                print("Evaluation perplexity: %f" % perplexity)
+                dev_perplexities.append(perplexity)
+                generated = generate_examples(valLoader, model, vocab, n=None, max_len=15)
+                print(generated)
+                generated = ['\t'.join(x) for x in generated]
+                generated = '\n'.join(generated)
+                with open(os.path.join(output_path, f"{epoch}.predicted"), 'w') as f:
+                    f.write(generated)
+
+if __name__ == "__main__":
+    train(sys.argv[1])
+
+
