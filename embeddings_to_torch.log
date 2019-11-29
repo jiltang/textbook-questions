@@ -1,0 +1,14 @@
+[2019-11-29 00:12:31,961 INFO] From: openNMTdata/data.vocab.pt
+[2019-11-29 00:12:31,962 INFO] 	* source vocab: 3005 words
+[2019-11-29 00:12:31,962 INFO] 	* target vocab: 2142 words
+[2019-11-29 00:12:31,962 INFO] Reading encoder and decoder embeddings from glove_dir/glove.6B.100d.txt
+[2019-11-29 00:12:35,004 INFO] 	Found 400000 total vectors in file
+[2019-11-29 00:12:35,004 INFO] After filtering to vectors in vocab:
+[2019-11-29 00:12:35,005 INFO] 	* enc: 1702 match, 1303 missing, (56.64%)
+[2019-11-29 00:12:35,005 INFO] 	* dec: 2093 match, 49 missing, (97.71%)
+[2019-11-29 00:12:35,005 INFO] 
+Saving embedding as:
+	* enc: openNMTdata/embeddings.enc.pt
+	* dec: openNMTdata/embeddings.dec.pt
+[2019-11-29 00:12:35,071 INFO] 
+Done.
