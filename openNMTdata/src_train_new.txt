@@ -1,0 +1,88 @@
+Astronomers study Earths larger environment: the solar system, galaxy, and universe that our planet resides in.
+Meteorologists study the atmosphere including climate and weather.
+Ocean waves are energy traveling through water.
+Sediment in ocean water acts like sandpaper. Over time, it erodes the shore.
+Glaciers are masses of flowing ice.
+Fossils are preserved remains or traces of organisms that lived in the past.
+An unconformity is a gap in rock layers. They occur where older rock layers eroded away completely before new rock layers were deposited.
+Freshwater is water that contains little or no salt.
+Most of Earths freshwater is frozen in ice caps and glaciers.
+A wetland is an area that is wet for all or part of the year.
+Many people get their freshwater from an aquifer. They obtain the water through a well. A well is a hole that is dug or drilled through the ground down to an aquifer.
+Most ocean waves are caused by winds. The size of a wave depends on how fast, how far, and how long the wind blows.
+Earths rotation influences their direction. This is called the Coriolis effect.
+Phytoplankton are the primary producers in the ocean. They form the base of most marine food chains.
+Three main groups of ocean life are plankton, nekton, and benthos. Benthos live on the ocean floor.
+Greenhouse gases in the atmosphere absorb heat. This is called the greenhouse effect and it makes the planet warmer.
+The troposphere is the lowest layer. Temperature decreases with altitude in this layer.
+A microclimate is a local climate that differs from the major climate type around it. For example, the south-facing side of a hill may have a warmer microclimate.
+Love Canal highlighted the problem of pollution by hazardous waste.
+Hazardous waste is any waste that is dangerous to the health of people or the environment. It may be toxic, corrosive, flammable, or explosive.
+Topography describes how Earths surface varies in elevation.
+Location information, satellite views, and other information can be linked together in Geographical Information Systems (GIS).
+Conservation means saving resources.
+About half the energy used in the U.S. is used in homes and for transportation.
+There are two basic ways to conserve energy. You can use less energy. You can also use energy more efficiently.
+Irrigation for agriculture uses the most water.
+Thermal pollution raises the temperature of water.
+The Montreal Protocol of 1987 bans CFCs. The purpose is to protect the ozone layer in the stratosphere.
+Newtons third law explains how a rocket works. The action force of the engine on the gases is accompanied by a reaction force of the gases on the rocket.
+The launch of the Sputnik 1 satellite started the Space Race between the United States and the Soviet Union.
+Space shuttles are reusable vehicles for American astronauts to get into space.
+The Moon has dark areas, called maria, surrounded by lighter colored highland areas, called terrae.
+The Sun is mostly hydrogen with smaller amounts of helium.
+Nuclear fusion of hydrogen in the core of the Sun produces tremendous amounts of energy that radiate out from the Sun.
+Pluto, Eris, Ceres, Makemake and Haumea are dwarf planets.
+Long-period comets come from the very distant Oort cloud.
+Short-period comets come from the Kuiper belt, beyond Neptune.
+The color of a star is determined by its surface temperature.
+Open clusters are groups of young stars loosely held together by gravity. Globular clusters are spherical groups of old stars held tightly together by gravity.
+Spiral galaxies have a rotating disk of stars and dust, a bulge in the middle, and several arms spiraling out from the center.
+Typical elliptical galaxies are oval shaped, red or yellow, and contain mostly old stars.
+Igneous rocks form either when they cool very slowly deep within the Earth or when magma cools rapidly at the Earths surface.
+Very thick lava that doesnt travel very far can produce lava domes at or near the Earths surface or even within a volcano. Lava plateaus and the entire ocean floor form from large lava flows that spread out over large areas.
+A microscope is an instrument that makes magnified images of very small objects so they are visible to the human eye.
+Mollusks have a coelom and several organ systems. Most also have a shell, head, foot, and radula, which is a feeding organ.
+Muscles are the main organs of the muscular system.
+Your body needs food for energy, building materials, and substances that control body processes.
+Blood consists of liquid plasma, which contains dissolved substances, and three types of cells: red blood cells, white blood cells, and platelets.
+Organs of excretion include the large intestine, liver, skin, lungs, and kidneys.
+The endocrine system is a system of glands that release chemical messenger molecules called hormones into the blood stream.
+The hypothalamus is part of the brain and also secretes hormones, thus connecting the nervous and endocrine systems.
+Infectious diseases are diseases that are caused by pathogens.
+The male reproductive system has two main functions: producing sperm and secreting testosterone.
+Sperm are male gametes.
+A sexually transmitted infection (STI) is a disease that spreads mainly through sexual contact.
+Ecology is the science of how living things interact with each other and their environment.
+A biome is a group of similar ecosystems with the same general abiotic factors and primary producers.
+A natural resource is something supplied by nature that helps support life.
+The geologic time scale is used to organize the vast expanse of time since Earth formed. It is based on major events in the history of Earth and its living things.
+Radioactive decay is the process in which unstable nuclei become stable by emitting particles and energy and changing to different elements.
+Distance is the length of the route between two points.
+Speed is a measure of how fast or slow something moves.
+Acceleration is a measure of the change in velocity of a moving object.
+To calculate acceleration without a change in direction, divide the change in velocity by the change in time.
+The slope of a velocity-time graph represents acceleration.
+Friction is a force that opposes motion between two surfaces that are touching.
+Elasticity is the ability of a material to return to its original shape after being stretched or compressed.
+The inertia of an object depends on its mass. Objects with greater mass have greater inertia.
+Weight is a measure of the force of gravity pulling on an object of a given mass.
+Buoyancy is the ability of a fluid to exert an upward force on any object placed in it.
+Power is a measure of the amount of work that can be done in a given amount of time.
+An inclined plane is a simple machine consisting of a sloping surface that connects lower and higher elevations.
+A compound machine consists of two or more simple machines.
+Potential energy is the energy stored in an object because of its position or shape.
+Convection is the transfer of thermal energy by particles moving through a fluid.
+Reflection occurs when waves bounce back from a barrier they cannot pass through.
+Sound is the transfer of energy from a vibrating object in waves that travel through matter.
+All electromagnetic waves travel at the same speed through space, called the speed of light, which equals 3.0 10^8 meters per second.
+Earth is a giant magnet with north and south magnetic poles and a magnetic field called the magnetosphere.
+A chemical bond is a force of attraction between atoms.
+An ionic bond is the force of attraction that holds together oppositely charged ions.
+A covalent bond is the force of attraction that holds together two atoms that share a pair of electrons.
+A metallic bond is the force of attraction between a positively charged metal ion and the valence electrons it shares with other ions of the metal.
+A chemical equation is a symbolic representation of a chemical reaction.
+Coefficients are used to balance chemical equations.
+Combustion is commonly called burning. Carbon dioxide, water, and heat and light are products of combustion.
+Photosynthesis is the process in which plants and certain other organisms synthesize glucose from carbon dioxide and water using light energy.
+Cellular respiration is the process in which the cells of living things break down glucose with oxygen to produce carbon dioxide, water, and energy.
