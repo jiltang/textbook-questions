@@ -46,32 +46,29 @@ def directIn(text):
   return random.choice(max_subsentences)
 
 if __name__ == "__main__":
-  data = ["squad", "val"]
-  method = "doLast"
+  data = ["openNMTdata", "test"] # dataset: (squad or openNMTdata) and (test or val)
+  method = "doLast" # (last or doLast or directIn)
 
   output_path = os.path.join("../outputs", "baseline" )
-  print(f"Constructing new output directory at {output_path}")
+  with open(os.path.join(output_path, f"{data[0]}_{data[1]}_{method}_baseline_predicted.txt"), 'w') as f:
+    print(f"Constructing new output directory at {output_path}")
 
   input_file = "../" + data[0] + "/" + data[1] + "_dat.txt"
   with open(input_file, "r") as input:
     for line in input:
-      if data[0] == "textbook":
-        text, question, answer = line.split("\t")
-      elif data[0] == "squad":
-        text, question = line.split("\t")
-      else:
-        raise "invalid dataset"
+      text, question = line.split("\t")
       text = text.strip()
       question = question.strip()
 
-      predicted = ""
+      # generate question
       if method == "last":
-        predicted += lastSentence(text)
+        predicted = lastSentence(text)
       elif method == "doLast":
-        predicted += doLastSentence(text)
+        predicted = doLastSentence(text)
       elif method == "directIn":
-        predicted += directIn(text)
+        predicted = directIn(text)
       else:
         raise "invalid method"
+
       with open(os.path.join(output_path, f"{data[0]}_{data[1]}_{method}_baseline_predicted.txt"), 'a+') as f:
         f.write(text + '\t' + question + '\t' + predicted + '\n')
