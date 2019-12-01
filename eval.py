@@ -1,6 +1,6 @@
 import csv
 import sacrebleu
-
+from rouge import Rouge
 import sys
 
 refs = []
@@ -14,3 +14,8 @@ with open(sys.argv[1], 'r') as f:
 refs.append(actuals)
 
 print(sacrebleu.corpus_bleu(preds, refs))
+
+r = Rouge()
+scores = r.get_scores(preds, actuals, avg=True)
+for k, v in scores.items():
+    print(k, v)
