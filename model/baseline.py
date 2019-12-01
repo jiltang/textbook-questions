@@ -45,29 +45,33 @@ def directIn(text):
   max_subsentences = [s for s in subsentences if len(s) == max_len]
   return random.choice(max_subsentences)
 
-# Construct generated text based on rules
-def rulesBased(text):
-  longest_subsentence = directIn(text)
-
 if __name__ == "__main__":
-  data = "test"
+  data = ["squad", "val"]
   method = "doLast"
 
   output_path = os.path.join("../outputs", "baseline" )
   print(f"Constructing new output directory at {output_path}")
 
-  with open("../data/test_dat.txt", "r") as input:
+  input_file = "../" + data[0] + "/" + data[1] + "_dat.txt"
+  with open(input_file, "r") as input:
     for line in input:
-      text, question, answer = line.split("\t")
-      
+      if data[0] == "textbook":
+        text, question, answer = line.split("\t")
+      elif data[0] == "squad":
+        text, question = line.split("\t")
+      else:
+        raise "invalid dataset"
+      text = text.strip()
+      question = question.strip()
+
+      predicted = ""
       if method == "last":
-        predicted = lastSentence(text)
+        predicted += lastSentence(text)
       elif method == "doLast":
-        predicted = doLastSentence(text)
+        predicted += doLastSentence(text)
       elif method == "directIn":
-        predicted = directIn(text)
+        predicted += directIn(text)
       else:
         raise "invalid method"
-
-      with open(os.path.join(output_path, f"{data}_{method}_baseline_predicted.txt"), 'a+') as f:
+      with open(os.path.join(output_path, f"{data[0]}_{data[1]}_{method}_baseline_predicted.txt"), 'a+') as f:
         f.write(text + '\t' + question + '\t' + predicted + '\n')
