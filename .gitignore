@@ -4,3 +4,5 @@ __pycache__
 .vector_cache
 glove_dir/*
 OpenNMT-py-master/*
+*.txt
+openNMTdata/*
